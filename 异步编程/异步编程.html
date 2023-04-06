@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>异步编程</title>
+</head>
+<body>
+  <script>
+      let abc;
+      fetch("")
+      .then(()=>{console.log(123)})
+      .then(()=>{
+        abc = 1;
+        console.log(123);
+        return abc;
+      }).then((abc0)=>{
+        console.log("abc", abc);
+        console.log("abc0", abc0);
+      }).catch((error)=>{
+        console.log(error);
+      }).finally(()=>{
+        console.log("finally");
+      })
+
+      // async await 是promise之上的语法糖
+      // 内部使用传统的for循环 或者 for await
+
+      async function fun1(){
+        console.log("fun1()");
+        await
+        console.log("fun1()-2");
+      }
+
+      fun1();
+
+      // promise
+      // 是一个构造函数 封装异步操作【fs文件操作、数据库操作、AJAX、定时器】
+      // 异步编程旧解决方案是【回调函数】
+      // promise支持【链式调用】,回避回调地狱
+
+      const promise = new Promise((resolve, reject) => {
+        let math_r = Math.random()
+        if(math_r>0.5){
+            resolve(math_r);
+        }else{
+            reject(math_r);
+        }
+      })
+
+      promise
+        .then( num => {
+            console.log("成功:", num);
+        })
+        .then( num => {
+            console.log("成功-2:", num);
+        })
+        .catch( num => {
+            console.log("失败:", num);
+        })
+        .finally( () => {
+            console.log("end");
+        })
+
+      promise
+        .then(() => {
+            console.log("promise-1");
+        })
+        .then(() => {
+            console.log("promise-2");
+        })
+        .then(() => {
+            console.log("promise-3");
+        })
+        .then(() => {
+            console.log("promise-4");
+        })
+
+  </script>
+</body>
+</html>
