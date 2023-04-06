@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>antv-1</title>
+    <script src="https://gw.alipayobjects.com/os/lib/antv/g2/4.2.7/dist/g2.min.js"></script>
+</head>
+<body>
+    <div id="div1"></div>
+    <script>
+        const data = [
+            { year: '1951 年', sales: 38 },
+            { year: '1952 年', sales: 52 },
+            { year: '1956 年', sales: 61 },
+            { year: '1957 年', sales: 145 },
+            { year: '1958 年', sales: 48 },
+            { year: '1959 年', sales: 38 },
+            { year: '1960 年', sales: 38 },
+            { year: '1962 年', sales: 38 },
+        ];
+        function build_chart(container){
+            const chart = new G2.Chart({
+                container: container,
+                autoFit: true,
+                height: 500,
+                padding: [30, 20, 70, 30]
+            });
+            return chart;
+        }
+        function chart_render(chart, data){
+            chart.data(data);
+            chart.scale('sales', {
+                nice: true,
+            });
+            chart.tooltip({
+                showMarkers: false
+            });
+            chart.interaction('active-region');
+            chart.interval().position('year*sales');
+            chart.render();
+            return chart;
+        }
+        let chart = build_chart('div1');
+        chart = chart_render(chart, data);
+        setTimeout(()=>{
+            chart.destroy();
+            setTimeout(()=>{
+                chart = build_chart('div1');
+                chart = chart_render(chart, data);
+            }, 1000)
+        }, 2000);
+
+
+    </script>
+
+</body>
+</html>
